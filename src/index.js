@@ -37,8 +37,38 @@ const MORSE_TABLE = {
     '-----':  '0',
 };
 
-function decode(expr) {
-    // write your solution here
+function decode(expr) {let morseArr = [];
+    for (let i = 0; morseArr.length < expr.length / 10; i += 10) {
+        morseArr.push(expr.slice(i, i + 10))
+    }
+    morseArr = morseArr.map( a => {
+        let letter = "";
+        for (let i = 0; i < 11; i += 2){
+
+            let symb = a.slice(i, i + 2);
+            switch (true)  {
+                case symb == "**":
+                    letter += " ";
+                    break;
+                case symb == "10":
+                    letter += ".";
+                    break;
+                case symb == "11":
+                    letter += "-";
+                    break;
+                case symb == "00":
+                    break;
+            }
+        }
+        if (letter == "     "){
+            letter = " ";
+        }
+        return letter;
+    })
+    let decodedString = morseArr.map(b => {
+        return MORSE_TABLE[b] || " "
+    }).join("")
+    return decodedString
 }
 
 module.exports = {
